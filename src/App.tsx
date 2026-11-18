@@ -301,9 +301,11 @@ function Card({ p }: { p: Project }) {
         <a href={p.link} target="_blank" rel="noreferrer">
           {t.projects.open} →
         </a>
-        <button className="ghost" onClick={() => setPreview(true)}>
-          <span aria-hidden>◫</span> {t.preview.button}
-        </button>
+        {p.preview !== false && (
+          <button className="ghost" onClick={() => setPreview(true)}>
+            <span aria-hidden>◫</span> {t.preview.button}
+          </button>
+        )}
       </div>
       {preview && <PreviewModal p={p} onClose={() => setPreview(false)} />}
     </article>

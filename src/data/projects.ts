@@ -14,6 +14,8 @@ export type Project = {
   featured?: boolean
   /** core = moduły ekosystemu ZINX, lab = inne projekty i eksperymenty */
   group: 'core' | 'lab'
+  /** false = bez przycisku podglądu (np. aplikacja w pasku menu) */
+  preview?: boolean
   text: Record<Lang, { summary: string; highlights: string[] }>
 }
 
@@ -56,6 +58,7 @@ export const projects: Project[] = [
     stack: ['Tauri 2', 'Rust', 'Ollama', 'whisper.cpp'],
     link: `${ZINX}/tree/main/Klaudiusz`,
     group: 'core',
+    preview: false,
     text: {
       pl: {
         summary:
