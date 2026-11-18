@@ -54,19 +54,20 @@ export const copy = {
     },
     experience: {
       title: 'Doświadczenie i edukacja',
+      currentLabel: 'Obecnie',
       items: [
-        { role: 'Informatyka (Sztuczna Inteligencja)', org: 'Uniwersytet Vizja', period: '10.2026 – obecnie', text: 'Studia inżynierskie ze specjalizacją w AI.' },
-        { role: 'Tester oprogramowania (staż)', org: 'Concept Lab', period: '11.2024 – 12.2024', text: 'Identyfikacja i raportowanie błędów, dokumentacja techniczna, nagrania prezentujące usterki.' },
-        { role: 'Technik programista', org: 'Technikum Kinematograficzno-Komputerowe im. K. Kieślowskiego', period: '09.2021 – 05.2026', text: 'Podstawy programowania, baz danych i tworzenia aplikacji webowych.' },
+        { role: 'Informatyka (Sztuczna Inteligencja)', org: 'Uniwersytet Vizja', period: '10.2026 – obecnie', kind: 'Edukacja', current: true, text: 'Studia inżynierskie ze specjalizacją w AI.' },
+        { role: 'Tester oprogramowania (staż)', org: 'Concept Lab', period: '11.2024 – 12.2024', kind: 'Staż', current: false, text: 'Identyfikacja i raportowanie błędów, dokumentacja techniczna, nagrania prezentujące usterki.' },
+        { role: 'Technik programista', org: 'Technikum Kinematograficzno-Komputerowe im. K. Kieślowskiego', period: '09.2021 – 05.2026', kind: 'Edukacja', current: false, text: 'Programowanie w Pythonie i JavaScript, bazy danych SQL oraz tworzenie aplikacji webowych w React.' },
       ],
     },
     stack: {
       title: 'Stack',
       groups: [
-        { name: 'AI lokalne', items: 'Ollama, modele LLM, Function Calling, whisper.cpp, klasyfikacja tekstu' },
-        { name: 'Frontend', items: 'React, TypeScript, Vite, CSS' },
-        { name: 'Backend i desktop', items: 'Rust, Tauri 2, rusqlite, SQLite' },
-        { name: 'Inne', items: 'JavaScript, Python, Git, GitHub' },
+        { name: 'AI lokalne', items: ['Python', 'Ollama', 'LLM', 'Function Calling', 'whisper.cpp', 'Klasyfikacja tekstu'] },
+        { name: 'Frontend', items: ['React', 'TypeScript', 'Vite', 'HTML / CSS'] },
+        { name: 'Backend i desktop', items: ['Rust', 'Tauri 2', 'rusqlite', 'SQLite'] },
+        { name: 'Narzędzia i workflow', items: ['Git', 'GitHub', 'SQL', 'macOS'] },
       ],
     },
     how: {
@@ -135,19 +136,20 @@ export const copy = {
     },
     experience: {
       title: 'Experience and education',
+      currentLabel: 'Current',
       items: [
-        { role: 'Computer Science (Artificial Intelligence)', org: 'Vizja University', period: '10.2026 – present', text: 'Engineering studies with a specialisation in AI.' },
-        { role: 'Software tester (internship)', org: 'Concept Lab', period: '11.2024 – 12.2024', text: 'Bug identification and reporting, technical documentation, video recordings showing defects.' },
-        { role: 'Software developer technician', org: 'Kieślowski Technical School of Film and Computing', period: '09.2021 – 05.2026', text: 'Programming, databases and web application basics.' },
+        { role: 'Computer Science (Artificial Intelligence)', org: 'Vizja University', period: '10.2026 – present', kind: 'Education', current: true, text: 'Engineering studies with a specialisation in AI.' },
+        { role: 'Software Tester (Internship)', org: 'Concept Lab', period: '11.2024 – 12.2024', kind: 'Internship', current: false, text: 'Bug identification and reporting, technical documentation, video recordings showing defects.' },
+        { role: 'IT Technician (Programming)', org: 'Kieślowski Technical School of Film and Computing', period: '09.2021 – 05.2026', kind: 'Education', current: false, text: 'Programming in Python and JavaScript, SQL databases and building web applications in React.' },
       ],
     },
     stack: {
       title: 'Stack',
       groups: [
-        { name: 'Local AI', items: 'Ollama, LLM models, Function Calling, whisper.cpp, text classification' },
-        { name: 'Frontend', items: 'React, TypeScript, Vite, CSS' },
-        { name: 'Backend & desktop', items: 'Rust, Tauri 2, rusqlite, SQLite' },
-        { name: 'Other', items: 'JavaScript, Python, Git, GitHub' },
+        { name: 'Local AI', items: ['Python', 'Ollama', 'LLM', 'Function Calling', 'whisper.cpp', 'Text Classification'] },
+        { name: 'Frontend', items: ['React', 'TypeScript', 'Vite', 'HTML / CSS'] },
+        { name: 'Backend & Desktop', items: ['Rust', 'Tauri 2', 'rusqlite', 'SQLite'] },
+        { name: 'Tools & Workflow', items: ['Git', 'GitHub', 'SQL', 'macOS'] },
       ],
     },
     how: {

@@ -379,3 +379,61 @@ button.ghost:hover { color: var(--text); border-color: rgba(94, 234, 212, 0.35);
 @media (max-width: 640px) {
   .lab-side { align-items: flex-start; text-align: left; }
 }
+
+/* ===== doświadczenie: ciągła oś czasu ===== */
+.timeline { position: relative; list-style: none; margin: 0; padding: 0 0 0 26px; display: grid; gap: 22px; }
+.timeline::before {
+  content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.timeline li { position: relative; border-left: 0; padding-left: 0; }
+.timeline .node {
+  position: absolute; left: -26px; top: 6px; width: 11px; height: 11px; border-radius: 50%;
+  background: #27272a; border: 1px solid rgba(255, 255, 255, 0.16); box-sizing: border-box;
+}
+.timeline li.current .node {
+  background: var(--accent); border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(94, 234, 212, 0.4);
+}
+.tl-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tl-head strong { font-size: 16px; }
+.kind {
+  font-size: 11px; padding: 2px 8px; border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.08); color: var(--muted);
+}
+.kind.intern { color: #a1a1aa; }
+.tl-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 2px; }
+.tl-meta .org { color: var(--accent); font-size: 14px; }
+.tl-meta .period { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; color: var(--muted); }
+.now {
+  font-size: 11px; padding: 2px 8px; border-radius: 999px;
+  color: var(--accent); background: rgba(45, 212, 191, 0.1); border: 1px solid rgba(94, 234, 212, 0.25);
+}
+.timeline p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
+
+/* ===== stack: karty bento z pastylkami ===== */
+.stack-grid { display: grid; gap: 12px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.stack-card {
+  background: #0c0c0e; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px;
+  padding: 16px; transition: border-color .2s ease;
+}
+.stack-card:hover { border-color: rgba(94, 234, 212, 0.28); }
+.stack-card h4 {
+  margin: 0 0 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); font-weight: 600;
+}
+.pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.pills span {
+  font-size: 12.5px; padding: 3px 9px; border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.07); color: #d4d4d8;
+}
+@media (max-width: 1023px) and (min-width: 640px) {
+  .stack-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 639px) {
+  .stack-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== odstępy między sekcjami: ok. 30% mniej ===== */
+.section { padding: 32px 0; }
+.subhead { margin: 24px 0 12px; }
+.subhead:first-of-type { margin-top: 20px; }

@@ -383,12 +383,17 @@ function Experience() {
       <h2>{t.experience.title}</h2>
       <ol className="timeline">
         {t.experience.items.map((e) => (
-          <li key={e.role}>
+          <li key={e.role} className={e.current ? 'current' : ''}>
+            <span className="node" aria-hidden />
             <div className="tl-head">
               <strong>{e.role}</strong>
-              <span className="period">{e.period}</span>
+              <span className={`kind ${e.kind === 'Staż' || e.kind === 'Internship' ? 'intern' : ''}`}>{e.kind}</span>
             </div>
-            <div className="org">{e.org}</div>
+            <div className="tl-meta">
+              <span className="org">{e.org}</span>
+              <span className="period">{e.period}</span>
+              {e.current && <span className="now">{t.experience.currentLabel}</span>}
+            </div>
             <p>{e.text}</p>
           </li>
         ))}
@@ -402,14 +407,18 @@ function Stack() {
   return (
     <section id="stack" className="section">
       <h2>{t.stack.title}</h2>
-      <dl className="stack">
+      <div className="stack-grid">
         {t.stack.groups.map((g) => (
-          <div key={g.name}>
-            <dt>{g.name}</dt>
-            <dd>{g.items}</dd>
+          <div className="stack-card" key={g.name}>
+            <h4>{g.name}</h4>
+            <div className="pills">
+              {g.items.map((x) => (
+                <span key={x}>{x}</span>
+              ))}
+            </div>
           </div>
         ))}
-      </dl>
+      </div>
     </section>
   )
 }
