@@ -547,6 +547,9 @@ function Contact() {
           <a className="btn" href="https://github.com/Keryyyl" target="_blank" rel="noreferrer">
             GitHub
           </a>
+          <a className="btn" href="https://www.linkedin.com/in/karol-idzkowski-2278b633b/" target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
         </div>
       </div>
     </section>
