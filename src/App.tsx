@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent, type MouseEvent as ReactMouseEvent } from 'react'
 import { LangProvider, useLang, type Lang } from './i18n'
 import { projects, type Project, type Tag } from './data/projects'
 import './App.css'
@@ -35,7 +35,6 @@ function Header() {
           <a href="#projekty">{t.nav.projects}</a>
           <a href="#doswiadczenie">{t.nav.experience}</a>
           <a href="#stack">{t.nav.stack}</a>
-          <a href="#sposob">{t.nav.how}</a>
           <a href="#kontakt">{t.nav.contact}</a>
         </nav>
         <LangSwitch />
@@ -434,21 +433,96 @@ function Stack() {
   )
 }
 
-function How() {
+const CONTACT_ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined
+
+type FormStatus = 'idle' | 'sending' | 'sent' | 'error' | 'unconfigured'
+
+/** Formularz kontaktowy. Wysyła JSON na adres z VITE_CONTACT_ENDPOINT (np. Formspree).
+ *  Adres e-mail odbiorcy jest po stronie usługi, nie w kodzie strony. */
+function ContactForm() {
   const { t } = useLang()
+  const [status, setStatus] = useState<FormStatus>('idle')
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+    const data = new FormData(form)
+    const name = String(data.get('name') ?? '').trim()
+    const email = String(data.get('email') ?? '').trim()
+    const message = String(data.get('message') ?? '').trim()
+    const consent = data.get('consent') === 'on'
+    const honeypot = String(data.get('website') ?? '')
+
+    const found: Record<string, string> = {}
+    if (!name) found.name = t.form.errors.name
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) found.email = t.form.errors.email
+    if (message.length < 10) found.message = t.form.errors.message
+    if (!consent) found.consent = t.form.errors.consent
+    setErrors(found)
+    if (Object.keys(found).length) return
+
+    // pułapka na boty: wypełnione ukryte pole udaje sukces i nic nie wysyła
+    if (honeypot) {
+      setStatus('sent')
+      return
+    }
+    if (!CONTACT_ENDPOINT) {
+      setStatus('unconfigured')
+      return
+    }
+    setStatus('sending')
+    try {
+      const res = await fetch(CONTACT_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ name, email, message, _subject: 'Wiadomość z portfolio' }),
+      })
+      if (!res.ok) throw new Error(String(res.status))
+      form.reset()
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    }
+  }
+
   return (
-    <section id="sposob" className="section">
-      <h2>{t.how.title}</h2>
-      <ol className="principles">
-        {t.how.points.map((p, i) => (
-          <li key={p.title}>
-            <span className="num">{String(i + 1).padStart(2, '0')}</span>
-            <strong>{p.title}</strong>
-            <p>{p.text}</p>
-          </li>
-        ))}
-      </ol>
-    </section>
+    <form className="contact-form" onSubmit={(e) => void submit(e)} noValidate>
+      <div className="row-2">
+        <label>
+          <span>{t.form.name}</span>
+          <input name="name" autoComplete="name" maxLength={120} />
+          {errors.name && <em className="field-error">{errors.name}</em>}
+        </label>
+        <label>
+          <span>{t.form.email}</span>
+          <input name="email" type="email" autoComplete="email" maxLength={200} />
+          {errors.email && <em className="field-error">{errors.email}</em>}
+        </label>
+      </div>
+      <label>
+        <span>{t.form.message}</span>
+        <textarea name="message" rows={5} maxLength={3000} />
+        {errors.message && <em className="field-error">{errors.message}</em>}
+      </label>
+      <label className="check">
+        <input name="consent" type="checkbox" />
+        <span>{t.form.consent}</span>
+        {errors.consent && <em className="field-error">{errors.consent}</em>}
+      </label>
+      {/* pole-pułapka dla botów: ukryte dla ludzi */}
+      <input className="hp" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+      <div className="form-foot">
+        <button className="btn primary" type="submit" disabled={status === 'sending'}>
+          {status === 'sending' ? t.form.sending : t.form.send}
+        </button>
+        <span className="form-status" role="status" aria-live="polite">
+          {status === 'sent' && t.form.sent}
+          {status === 'error' && t.form.error}
+          {status === 'unconfigured' && t.form.notConfigured}
+        </span>
+      </div>
+    </form>
   )
 }
 
@@ -456,9 +530,12 @@ function Contact() {
   const { t } = useLang()
   return (
     <section id="kontakt" className="section contact-section">
+      <h2>{t.form.title}</h2>
+      <p className="form-lead">{t.form.lead}</p>
+      <ContactForm />
       <div className="contact-card">
         <span className="eyebrow">{t.contact.title}</span>
-        <h2 className="contact-heading">{t.contact.heading}</h2>
+        <h3 className="contact-heading">{t.contact.heading}</h3>
         <p>{t.contact.text}</p>
         <div className="actions">
           <a className="btn primary" href="/cv/CV-Karol-Idzkowski-PL.pdf" download>
@@ -497,7 +574,6 @@ export default function App() {
         <Projects />
         <Experience />
         <Stack />
-        <How />
         <Contact />
       </main>
       <Footer />

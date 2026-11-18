@@ -5,7 +5,7 @@ export type Lang = 'pl' | 'en'
 /** Wszystkie teksty interfejsu. Opisy projektów są w src/data/projects.ts. */
 export const copy = {
   pl: {
-    nav: { projects: 'Projekty', experience: 'Doświadczenie', stack: 'Stack', how: 'Sposób pracy', contact: 'Kontakt' },
+    nav: { projects: 'Projekty', experience: 'Doświadczenie', stack: 'Stack', contact: 'Skontaktuj się' },
     runtime: {
       title: 'local-runtime.status',
       rows: [
@@ -69,16 +69,26 @@ export const copy = {
         { name: 'Narzędzia i workflow', items: ['Git', 'GitHub', 'SQL', 'macOS'] },
       ],
     },
-    how: {
-      title: 'Sposób pracy',
-      points: [
-        { title: 'Prywatność lokalnie', text: 'Dane zostają na moim komputerze. Chmura tylko tam, gdzie jest konieczna.' },
-        { title: 'Zapisy po potwierdzeniu', text: 'Zmiany, które mogą coś nadpisać, wymagają wyraźnego potwierdzenia.' },
-        { title: 'Testy w rdzeniu', text: 'Każda część rdzenia ma testy, zanim trafi dalej.' },
-        { title: 'Dziennik decyzji', text: 'Decyzje architektoniczne zapisuję w repozytorium, żeby wrócić do nich po czasie.' },
-      ],
-    },
     cv: { title: 'CV', pl: 'Wersja polska', en: 'Wersja angielska', download: 'Pobierz PDF' },
+    form: {
+      title: 'Skontaktuj się',
+      lead: 'Napisz, czego szukasz. Odpowiem na podany adres e-mail.',
+      name: 'Imię',
+      email: 'E-mail',
+      message: 'Wiadomość',
+      consent: 'Zgadzam się na kontakt w sprawie tej wiadomości.',
+      send: 'Wyślij',
+      sending: 'Wysyłanie…',
+      sent: 'Dziękuję, wiadomość wysłana.',
+      error: 'Nie udało się wysłać. Spróbuj ponownie albo napisz przez GitHub.',
+      notConfigured: 'Formularz nie jest jeszcze podłączony. Ustaw VITE_CONTACT_ENDPOINT.',
+      errors: {
+        name: 'Podaj imię.',
+        email: 'Podaj poprawny adres e-mail.',
+        message: 'Wiadomość powinna mieć co najmniej 10 znaków.',
+        consent: 'Zaznacz zgodę, żebym mógł odpowiedzieć.',
+      },
+    },
     contact: {
       title: 'Kontakt i CV',
       heading: 'Szukasz kogoś do narzędzi AI działających lokalnie?',
@@ -89,7 +99,7 @@ export const copy = {
     footer: 'Karol Idźkowski',
   },
   en: {
-    nav: { projects: 'Projects', experience: 'Experience', stack: 'Stack', how: 'How I work', contact: 'Contact' },
+    nav: { projects: 'Projects', experience: 'Experience', stack: 'Stack', contact: 'Get in touch' },
     runtime: {
       title: 'local-runtime.status',
       rows: [
@@ -153,16 +163,26 @@ export const copy = {
         { name: 'Tools & Workflow', items: ['Git', 'GitHub', 'SQL', 'macOS'] },
       ],
     },
-    how: {
-      title: 'How I work',
-      points: [
-        { title: 'Local-first privacy', text: 'Data stays on my machine. The cloud only where it is needed.' },
-        { title: 'Explicit write confirmations', text: 'Changes that could overwrite something need explicit confirmation.' },
-        { title: 'Core test coverage', text: 'Every part of the core has tests before it moves on.' },
-        { title: 'Decision log', text: 'Architecture decisions are written in the repository so I can come back to them later.' },
-      ],
-    },
     cv: { title: 'CV', pl: 'Polish version', en: 'English version', download: 'Download PDF' },
+    form: {
+      title: 'Get in touch',
+      lead: 'Tell me what you are looking for. I will reply to the email address you give.',
+      name: 'Name',
+      email: 'Email',
+      message: 'Message',
+      consent: 'I agree to be contacted about this message.',
+      send: 'Send',
+      sending: 'Sending…',
+      sent: 'Thanks, your message was sent.',
+      error: 'Sending failed. Try again or write to me on GitHub.',
+      notConfigured: 'The form is not connected yet. Set VITE_CONTACT_ENDPOINT.',
+      errors: {
+        name: 'Enter your name.',
+        email: 'Enter a valid email address.',
+        message: 'The message should be at least 10 characters.',
+        consent: 'Tick the box so I can reply.',
+      },
+    },
     contact: {
       title: 'Contact & CV',
       heading: 'Looking for someone to build local-first AI tools?',

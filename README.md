@@ -1,32 +1,27 @@
-# React + TypeScript + Vite
+# Portfolio: Karol Idźkowski
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Strona w React + TypeScript + Vite. Język PL (domyślny) i EN.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+pnpm install
+pnpm dev     # podgląd lokalny
+pnpm build   # wersja produkcyjna w dist/
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Formularz kontaktowy
+
+Formularz wysyła JSON na adres z `VITE_CONTACT_ENDPOINT`. Najprościej użyć darmowej usługi
+przekazującej wiadomości na e-mail, np. [Formspree](https://formspree.io):
+
+1. Załóż formularz w usłudze i ustaw w jej panelu adres, na który mają przychodzić wiadomości.
+2. Skopiuj `.env.example` do `.env.local` i wpisz adres formularza.
+3. Uruchom `pnpm build` ponownie.
+
+Bez tego zmiennej formularz pokazuje komunikat, że nie jest jeszcze podłączony.
+Adres odbiorcy nie jest w kodzie strony. Pole-pułapka chroni przed botami.
+
+## Pliki do uzupełnienia
+
+- `public/icons/<id>.png` — ikony modułów (32×32), np. `klaudiusz.png`
+- `public/previews/<id>.png` — zrzuty ekranu do podglądu (16:10)
+- `public/media/demo.webm` — nagranie w sekcji projektu głównego
