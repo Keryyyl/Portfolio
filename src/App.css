@@ -467,3 +467,11 @@ button.ghost:hover { color: var(--text); border-color: rgba(94, 234, 212, 0.35);
 /* pole-pułapka: poza ekranem */
 .contact-form .hp { position: absolute; left: -10000px; width: 1px; height: 1px; opacity: 0; }
 .contact-section .contact-card { margin-top: 0; }
+
+/* ===== płynne przewijanie do sekcji z menu ===== */
+html { scroll-behavior: smooth; }
+/* sekcja nie chowa się pod przyklejonym paskiem nawigacji */
+section[id] { scroll-margin-top: 80px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
