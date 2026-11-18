@@ -204,31 +204,131 @@ function FeaturedCard({ p }: { p: Project }) {
   )
 }
 
-function Card({ p, compact = false }: { p: Project; compact?: boolean }) {
+/** Ikona modułu: public/icons/<id>.png, a bez pliku prosty znak SVG. */
+function ModuleIcon({ id, title }: { id: string; title: string }) {
+  const [failed, setFailed] = useState(false)
+  return (
+    <span className="mod-icon" aria-hidden>
+      {!failed ? (
+        <img src={`/icons/${id}.png`} alt="" width={32} height={32} onError={() => setFailed(true)} />
+      ) : (
+        <svg viewBox="0 0 32 32" width="32" height="32">
+          <rect x="1" y="1" width="30" height="30" rx="8" fill="#111114" stroke="rgba(255,255,255,0.08)" />
+          <circle cx="16" cy="16" r="4" fill="#2dd4bf" />
+          <title>{title}</title>
+        </svg>
+      )}
+    </span>
+  )
+}
+
+function TagPills({ tags }: { tags: Tag[] }) {
+  return (
+    <div className="tags">
+      {tags.map((x) => (
+        <span key={x} className={x === 'AI' ? 'tag-ai' : ''}>
+          {x}
+        </span>
+      ))}
+    </div>
+  )
+}
+
+/** Modal z podglądem: Escape i kliknięcie w tło zamykają. */
+function PreviewModal({ p, onClose }: { p: Project; onClose: () => void }) {
   const { lang, t } = useLang()
   const text = p.text[lang]
+  const [missing, setMissing] = useState(false)
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [onClose])
   return (
-    <article className={`card ${compact ? 'compact' : ''}`}>
-      <div className="card-head">
-        <h3>{p.title}</h3>
-        <div className="tags">
-          {p.tags.map((x) => (
-            <span key={x}>{x}</span>
-          ))}
+    <div className="modal-backdrop" onClick={onClose} role="presentation">
+      <div className="modal" role="dialog" aria-modal="true" aria-label={p.title} onClick={(e) => e.stopPropagation()}>
+        <div className="modal-head">
+          <ModuleIcon id={p.id} title={p.title} />
+          <div className="modal-title">
+            <strong>{p.title}</strong>
+            <div className="stack-line">{p.stack.join(' · ')}</div>
+          </div>
+          <button className="modal-close" onClick={onClose} aria-label={t.preview.close}>
+            ×
+          </button>
         </div>
-      </div>
-      <p>{text.summary}</p>
-      {!compact && text.highlights.length > 0 && (
+        <div className="shot">
+          {!missing ? (
+            <img src={`/previews/${p.id}.png`} alt={`${p.title}`} onError={() => setMissing(true)} />
+          ) : (
+            <div className="shot-placeholder">
+              <strong>{p.title}</strong>
+              <span>{t.preview.drop(p.id)}</span>
+            </div>
+          )}
+        </div>
         <ul>
           {text.highlights.map((h) => (
             <li key={h}>{h}</li>
           ))}
         </ul>
-      )}
+      </div>
+    </div>
+  )
+}
+
+function Card({ p }: { p: Project }) {
+  const { lang, t } = useLang()
+  const [preview, setPreview] = useState(false)
+  const text = p.text[lang]
+  return (
+    <article className="card">
+      <div className="card-title">
+        <ModuleIcon id={p.id} title={p.title} />
+        <h3>{p.title}</h3>
+      </div>
+      <TagPills tags={p.tags} />
+      <p>{text.summary}</p>
+      <ul>
+        {text.highlights.map((h) => (
+          <li key={h}>{h}</li>
+        ))}
+      </ul>
       <div className="stack-line">{p.stack.join(' · ')}</div>
-      <a href={p.link} target="_blank" rel="noreferrer">
-        {t.projects.open} →
-      </a>
+      <div className="card-foot">
+        <a href={p.link} target="_blank" rel="noreferrer">
+          {t.projects.open} →
+        </a>
+        <button className="ghost" onClick={() => setPreview(true)}>
+          <span aria-hidden>◫</span> {t.preview.button}
+        </button>
+      </div>
+      {preview && <PreviewModal p={p} onClose={() => setPreview(false)} />}
+    </article>
+  )
+}
+
+/** Infinity Wordle: pełna szerokość, w jednym wierszu. */
+function LabRow({ p }: { p: Project }) {
+  const { lang, t } = useLang()
+  const text = p.text[lang]
+  return (
+    <article className="lab-row">
+      <div className="lab-main">
+        <div className="card-title">
+          <h3>{p.title}</h3>
+          <TagPills tags={p.tags} />
+        </div>
+        <p>{text.summary}</p>
+      </div>
+      <div className="lab-side">
+        <div className="stack-line">{p.stack.join(' · ')}</div>
+        <a href={p.link} target="_blank" rel="noreferrer">
+          {t.projects.open} →
+        </a>
+      </div>
     </article>
   )
 }
@@ -240,6 +340,7 @@ function Projects() {
   const core = projects.filter((p) => p.group === 'core' && !p.featured)
   const lab = projects.filter((p) => p.group === 'lab')
   const shown = core.filter((p) => tag === 'all' || p.tags.includes(tag))
+  const count = (f: Tag | 'all') => (f === 'all' ? core.length : core.filter((p) => p.tags.includes(f)).length)
   return (
     <section id="projekty" className="section">
       <h2>{t.projects.title}</h2>
@@ -251,7 +352,7 @@ function Projects() {
       <div className="filters" role="group" aria-label="Filtr">
         {(['all', ...TAGS] as const).map((f) => (
           <button key={f} className={tag === f ? 'on' : ''} aria-pressed={tag === f} onClick={() => setTag(f)}>
-            {f === 'all' ? t.projects.all : f}
+            {f === 'all' ? t.projects.all : f} <span className="count">{count(f)}</span>
           </button>
         ))}
       </div>
@@ -266,11 +367,9 @@ function Projects() {
       {lab.length > 0 && (
         <>
           <h3 className="subhead">{t.projects.labTitle}</h3>
-          <div className="lab-grid">
-            {lab.map((p) => (
-              <Card key={p.id} p={p} compact />
-            ))}
-          </div>
+          {lab.map((p) => (
+            <LabRow key={p.id} p={p} />
+          ))}
         </>
       )}
     </section>

@@ -33,6 +33,11 @@ export const copy = {
       coreTitle: 'Moduły ekosystemu ZINX',
       labTitle: 'Inne projekty i eksperymenty',
     },
+    preview: {
+      button: 'Podgląd',
+      close: 'Zamknij',
+      drop: (id: string) => `Dodaj zrzut ekranu: public/previews/${id}.png`,
+    },
     demo: {
       label: 'Demo: Klaudiusz steruje EINPX na żywo',
       placeholder: '[Demo Video: Klaudiusz Voice Orchestration & EINPX Live Dashboard]',
@@ -108,6 +113,11 @@ export const copy = {
       badge: 'Local AI • Data on your machine • Local-first',
       coreTitle: 'ZINX Ecosystem Modules',
       labTitle: 'Other Experiments & Labs',
+    },
+    preview: {
+      button: 'Preview',
+      close: 'Close',
+      drop: (id: string) => `Drop screenshot into public/previews/${id}.png`,
     },
     demo: {
       label: 'Demo: Klaudiusz controls EINPX live',
