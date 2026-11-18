@@ -12,6 +12,8 @@ export type Project = {
   link: string
   /** wyróżniony na pełną szerokość */
   featured?: boolean
+  /** core = moduły ekosystemu ZINX, lab = inne projekty i eksperymenty */
+  group: 'core' | 'lab'
   text: Record<Lang, { summary: string; highlights: string[] }>
 }
 
@@ -25,10 +27,11 @@ export const projects: Project[] = [
     stack: ['Tauri 2', 'Rust', 'React', 'TypeScript', 'SQLite', 'Ollama', 'whisper.cpp'],
     link: ZINX,
     featured: true,
+    group: 'core',
     text: {
       pl: {
         summary:
-          'Ekosystem lokalnych aplikacji na macOS: poczta, planer, finanse, dashboard i asystent głosowy. Każda ma własną bazę SQLite. Dane nie opuszczają komputera.',
+          'Ekosystem pięciu aplikacji na macOS: poczta, planer, finanse, dashboard i asystent głosowy. Dane zostają na komputerze, a modele AI działają lokalnie, bez wysyłania treści do chmury. Każda aplikacja ma własną bazę SQLite.',
         highlights: [
           'Asystent głosowy: rozpoznawanie mowy (whisper.cpp) i lokalny model z wywoływaniem narzędzi (Ollama)',
           'Zapisy wyłącznie po wyraźnym potwierdzeniu użytkownika',
@@ -37,7 +40,7 @@ export const projects: Project[] = [
       },
       en: {
         summary:
-          'An ecosystem of local macOS apps: mail, planner, finance, dashboard and a voice assistant. Each has its own SQLite database. The data never leaves the machine.',
+          'An ecosystem of five macOS apps: mail, planner, finance, dashboard and a voice assistant. The data stays on the machine and the AI models run locally, without sending content to a cloud service. Each app has its own SQLite database.',
         highlights: [
           'Voice assistant: speech recognition (whisper.cpp) and a local model that calls tools (Ollama)',
           'Writes only after explicit user confirmation',
@@ -52,6 +55,7 @@ export const projects: Project[] = [
     tags: ['AI', 'Backend'],
     stack: ['Tauri 2', 'Rust', 'Ollama', 'whisper.cpp'],
     link: `${ZINX}/tree/main/Klaudiusz`,
+    group: 'core',
     text: {
       pl: {
         summary:
@@ -71,6 +75,7 @@ export const projects: Project[] = [
     tags: ['Backend', 'Frontend', 'AI'],
     stack: ['Tauri 2', 'Rust', 'React', 'SQLite'],
     link: `${ZINX}/tree/main/PFMX`,
+    group: 'core',
     text: {
       pl: {
         summary:
@@ -90,6 +95,7 @@ export const projects: Project[] = [
     tags: ['Backend', 'Frontend', 'AI'],
     stack: ['Tauri 2', 'Rust', 'React', 'SQLite'],
     link: `${ZINX}/tree/main/ZIM`,
+    group: 'core',
     text: {
       pl: {
         summary:
@@ -109,6 +115,7 @@ export const projects: Project[] = [
     tags: ['Frontend', 'Backend'],
     stack: ['Tauri 2', 'Rust', 'React', 'SQLite'],
     link: `${ZINX}/tree/main/CTHX`,
+    group: 'core',
     text: {
       pl: {
         summary: 'Planer: kalendarz miesiąca, zadania i wydarzenia, powtarzalne wpisy, habit tracker i tablica kanban.',
@@ -126,6 +133,7 @@ export const projects: Project[] = [
     tags: ['Frontend', 'Backend'],
     stack: ['Tauri 2', 'Rust', 'React', 'SQLite'],
     link: `${ZINX}/tree/main/EINPX`,
+    group: 'core',
     text: {
       pl: {
         summary:
@@ -145,6 +153,7 @@ export const projects: Project[] = [
     tags: ['Frontend'],
     stack: ['JavaScript', 'HTML', 'CSS'],
     link: 'https://github.com/Keryyyl/Infinity_Wordle',
+    group: 'lab',
     text: {
       pl: {
         summary:

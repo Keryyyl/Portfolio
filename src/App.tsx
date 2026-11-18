@@ -95,6 +95,33 @@ function ZinxDiagram() {
   )
 }
 
+/** Miejsce na nagranie: podmień plik public/media/demo.webm (lub demo.mp4), a placeholder zniknie sam. */
+function DemoSlot() {
+  const { t } = useLang()
+  const [missing, setMissing] = useState(false)
+  return (
+    <figure className="demo" aria-label={t.demo.label}>
+      {!missing ? (
+        <video
+          src="/media/demo.webm"
+          autoPlay
+          loop
+          muted
+          playsInline
+          onError={() => setMissing(true)}
+        />
+      ) : (
+        <div className="demo-placeholder">
+          <span className="play" aria-hidden>▶</span>
+          <span className="demo-text">{t.demo.placeholder}</span>
+          <span className="demo-hint">{t.demo.hint}</span>
+        </div>
+      )}
+      <figcaption>{t.demo.label}</figcaption>
+    </figure>
+  )
+}
+
 function FeaturedCard({ p }: { p: Project }) {
   const { lang, t } = useLang()
   const text = p.text[lang]
@@ -103,6 +130,7 @@ function FeaturedCard({ p }: { p: Project }) {
       <div className="card-head">
         <div>
           <span className="eyebrow">{t.projects.featuredLabel}</span>
+          <span className="badge">{t.projects.badge}</span>
           <h3>{p.title}</h3>
         </div>
         <div className="tags">
@@ -117,6 +145,7 @@ function FeaturedCard({ p }: { p: Project }) {
           <li key={h}>{h}</li>
         ))}
       </ul>
+      <DemoSlot />
       <ZinxDiagram />
       <div className="stack-line">{p.stack.join(' · ')}</div>
       <a href={p.link} target="_blank" rel="noreferrer">
@@ -126,11 +155,11 @@ function FeaturedCard({ p }: { p: Project }) {
   )
 }
 
-function Card({ p }: { p: Project }) {
+function Card({ p, compact = false }: { p: Project; compact?: boolean }) {
   const { lang, t } = useLang()
   const text = p.text[lang]
   return (
-    <article className="card">
+    <article className={`card ${compact ? 'compact' : ''}`}>
       <div className="card-head">
         <h3>{p.title}</h3>
         <div className="tags">
@@ -140,7 +169,7 @@ function Card({ p }: { p: Project }) {
         </div>
       </div>
       <p>{text.summary}</p>
-      {text.highlights.length > 0 && (
+      {!compact && text.highlights.length > 0 && (
         <ul>
           {text.highlights.map((h) => (
             <li key={h}>{h}</li>
@@ -159,14 +188,17 @@ function Projects() {
   const { t } = useLang()
   const [tag, setTag] = useState<Tag | 'all'>('all')
   const featured = projects.filter((p) => p.featured)
-  const rest = projects.filter((p) => !p.featured)
-  const shown = rest.filter((p) => tag === 'all' || p.tags.includes(tag))
+  const core = projects.filter((p) => p.group === 'core' && !p.featured)
+  const lab = projects.filter((p) => p.group === 'lab')
+  const shown = core.filter((p) => tag === 'all' || p.tags.includes(tag))
   return (
     <section id="projekty" className="section">
       <h2>{t.projects.title}</h2>
       {featured.map((p) => (
         <FeaturedCard key={p.id} p={p} />
       ))}
+
+      <h3 className="subhead">{t.projects.coreTitle}</h3>
       <div className="filters" role="group" aria-label="Filtr">
         {(['all', ...TAGS] as const).map((f) => (
           <button key={f} className={tag === f ? 'on' : ''} aria-pressed={tag === f} onClick={() => setTag(f)}>
@@ -179,6 +211,17 @@ function Projects() {
           <Card key={p.id} p={p} />
         ))}
       </div>
+
+      {lab.length > 0 && (
+        <>
+          <h3 className="subhead">{t.projects.labTitle}</h3>
+          <div className="lab-grid">
+            {lab.map((p) => (
+              <Card key={p.id} p={p} compact />
+            ))}
+          </div>
+        </>
+      )}
     </section>
   )
 }
@@ -227,8 +270,12 @@ function How() {
     <section id="sposob" className="section">
       <h2>{t.how.title}</h2>
       <ol className="principles">
-        {t.how.points.map((p) => (
-          <li key={p}>{p}</li>
+        {t.how.points.map((p, i) => (
+          <li key={p.title}>
+            <span className="num">{String(i + 1).padStart(2, '0')}</span>
+            <strong>{p.title}</strong>
+            <p>{p.text}</p>
+          </li>
         ))}
       </ol>
     </section>

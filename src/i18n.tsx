@@ -20,6 +20,14 @@ export const copy = {
       all: 'Wszystkie',
       open: 'Zobacz kod',
       featuredLabel: 'Projekt główny',
+      badge: 'AI lokalnie • Dane na komputerze • Local-first',
+      coreTitle: 'Moduły ekosystemu ZINX',
+      labTitle: 'Inne projekty i eksperymenty',
+    },
+    demo: {
+      label: 'Demo: Klaudiusz steruje EINPX na żywo',
+      placeholder: '[Demo Video: Klaudiusz Voice Orchestration & EINPX Live Dashboard]',
+      hint: 'Nagranie: zapis ekranu w pętli, plik demo.webm lub demo.gif',
     },
     zinx: {
       title: 'Jak to się łączy',
@@ -41,7 +49,7 @@ export const copy = {
     stack: {
       title: 'Stack',
       groups: [
-        { name: 'AI lokalne', items: 'Ollama, modele LLM, whisper.cpp, klasyfikacja tekstu' },
+        { name: 'AI lokalne', items: 'Ollama, modele LLM, Function Calling, whisper.cpp, klasyfikacja tekstu' },
         { name: 'Frontend', items: 'React, TypeScript, Vite, CSS' },
         { name: 'Backend i desktop', items: 'Rust, Tauri 2, rusqlite, SQLite' },
         { name: 'Inne', items: 'JavaScript, Python, Git, GitHub' },
@@ -50,10 +58,10 @@ export const copy = {
     how: {
       title: 'Sposób pracy',
       points: [
-        'Dane zostają na moim komputerze. Chmura tylko tam, gdzie jest konieczna.',
-        'Zmiany, które mogą coś nadpisać, wymagają wyraźnego potwierdzenia.',
-        'Każda część rdzenia ma testy, zanim trafi dalej.',
-        'Decyzje dokumentuję w repozytorium, żeby wrócić do nich po czasie.',
+        { title: 'Prywatność lokalnie', text: 'Dane zostają na moim komputerze. Chmura tylko tam, gdzie jest konieczna.' },
+        { title: 'Zapisy po potwierdzeniu', text: 'Zmiany, które mogą coś nadpisać, wymagają wyraźnego potwierdzenia.' },
+        { title: 'Testy w rdzeniu', text: 'Każda część rdzenia ma testy, zanim trafi dalej.' },
+        { title: 'Dziennik decyzji', text: 'Decyzje architektoniczne zapisuję w repozytorium, żeby wrócić do nich po czasie.' },
       ],
     },
     cv: { title: 'CV', pl: 'Wersja polska', en: 'Wersja angielska', download: 'Pobierz PDF' },
@@ -78,7 +86,15 @@ export const copy = {
       title: 'Projects',
       all: 'All',
       open: 'View code',
-      featuredLabel: 'Main project',
+      featuredLabel: 'Flagship project',
+      badge: 'Local AI • Data on your machine • Local-first',
+      coreTitle: 'ZINX Ecosystem Modules',
+      labTitle: 'Other Experiments & Labs',
+    },
+    demo: {
+      label: 'Demo: Klaudiusz controls EINPX live',
+      placeholder: '[Demo Video: Klaudiusz Voice Orchestration & EINPX Live Dashboard]',
+      hint: 'Recording: looped screen capture, demo.webm or demo.gif',
     },
     zinx: {
       title: 'How it fits together',
@@ -100,7 +116,7 @@ export const copy = {
     stack: {
       title: 'Stack',
       groups: [
-        { name: 'Local AI', items: 'Ollama, LLM models, whisper.cpp, text classification' },
+        { name: 'Local AI', items: 'Ollama, LLM models, Function Calling, whisper.cpp, text classification' },
         { name: 'Frontend', items: 'React, TypeScript, Vite, CSS' },
         { name: 'Backend & desktop', items: 'Rust, Tauri 2, rusqlite, SQLite' },
         { name: 'Other', items: 'JavaScript, Python, Git, GitHub' },
@@ -109,10 +125,10 @@ export const copy = {
     how: {
       title: 'How I work',
       points: [
-        'Data stays on my machine. The cloud only where it is needed.',
-        'Changes that could overwrite something need explicit confirmation.',
-        'Every part of the core has tests before it moves on.',
-        'I document decisions in the repository so I can come back to them later.',
+        { title: 'Local-first privacy', text: 'Data stays on my machine. The cloud only where it is needed.' },
+        { title: 'Explicit write confirmations', text: 'Changes that could overwrite something need explicit confirmation.' },
+        { title: 'Core test coverage', text: 'Every part of the core has tests before it moves on.' },
+        { title: 'Decision log', text: 'Architecture decisions are written in the repository so I can come back to them later.' },
       ],
     },
     cv: { title: 'CV', pl: 'Polish version', en: 'English version', download: 'Download PDF' },
