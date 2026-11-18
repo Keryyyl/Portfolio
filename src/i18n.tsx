@@ -2,14 +2,15 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 
 export type Lang = 'pl' | 'en'
 
-/** Wszystkie teksty strony. Dodanie języka = dopisanie kolumny tutaj. */
+/** Wszystkie teksty interfejsu. Opisy projektów są w src/data/projects.ts. */
 export const copy = {
   pl: {
-    nav: { projects: 'Projekty', stack: 'Stack', how: 'Sposób pracy', cv: 'CV', contact: 'Kontakt' },
+    nav: { projects: 'Projekty', experience: 'Doświadczenie', stack: 'Stack', how: 'Sposób pracy', cv: 'CV', contact: 'Kontakt' },
     hero: {
       name: 'Karol Idźkowski',
-      role: 'Buduję narzędzia z AI, które działają lokalnie.',
+      role: 'Młodszy programista. Buduję narzędzia AI, które działają lokalnie.',
       status: 'Otwarty na nowe projekty i współpracę.',
+      stack: 'Python · TypeScript · React · Rust',
       cvPl: 'Pobierz CV (PL)',
       cvEn: 'Pobierz CV (EN)',
       github: 'GitHub',
@@ -17,25 +18,24 @@ export const copy = {
     projects: {
       title: 'Projekty',
       all: 'Wszystkie',
-      open: 'Otwórz',
-      readme: 'Opis w repozytorium',
+      open: 'Zobacz kod',
+      featuredLabel: 'Projekt główny',
+    },
+    zinx: {
+      title: 'Jak to się łączy',
+      caption: 'Każda aplikacja ma własną bazę SQLite. Dashboard i asystent czytają dane innych, ale nie zapisują w nich bez potwierdzenia.',
+      db: 'baza SQLite',
+      reads: 'czyta (tylko odczyt)',
+      confirm: 'zapisuje po potwierdzeniu',
+      voice: 'asystent głosowy',
+      dash: 'dashboard',
+    },
+    experience: {
+      title: 'Doświadczenie i edukacja',
       items: [
-        {
-          title: 'ZINX',
-          tags: ['AI', 'Backend', 'Frontend'],
-          summary:
-            'Ekosystem pięciu osobistych aplikacji na macOS: poczta, planer, finanse, dashboard i asystent głosowy. Wszystko działa lokalnie, a dane zostają na komputerze.',
-          highlights: ['Asystent głosowy z lokalnym LLM i rozpoznawaniem mowy', 'Zapisy wyłącznie po potwierdzeniu użytkownika', '68 testów w rdzeniu finansów, 28 w asystencie'],
-          link: 'https://github.com/Keryyyl/ZINX',
-        },
-        {
-          title: 'Infinity Wordle',
-          tags: ['Frontend'],
-          summary:
-            'Wordle po polsku w czystym JavaScripcie, bez frameworków. Polskie litery, klawiatura na ekranie, tryb jasny i ciemny, kilka gier naraz.',
-          highlights: ['Słownik ponad 50 000 polskich słów'],
-          link: 'https://github.com/Keryyyl/Infinity_Wordle',
-        },
+        { role: 'Informatyka (Sztuczna Inteligencja)', org: 'Uniwersytet Vizja', period: '10.2026 – obecnie', text: 'Studia inżynierskie ze specjalizacją w AI.' },
+        { role: 'Tester oprogramowania (staż)', org: 'Concept Lab', period: '11.2024 – 12.2024', text: 'Identyfikacja i raportowanie błędów, dokumentacja techniczna, nagrania prezentujące usterki.' },
+        { role: 'Technik programista', org: 'Technikum Kinematograficzno-Komputerowe im. K. Kieślowskiego', period: '09.2021 – 05.2026', text: 'Podstawy programowania, baz danych i tworzenia aplikacji webowych.' },
       ],
     },
     stack: {
@@ -53,22 +53,23 @@ export const copy = {
         'Dane zostają na moim komputerze. Chmura tylko tam, gdzie jest konieczna.',
         'Zmiany, które mogą coś nadpisać, wymagają wyraźnego potwierdzenia.',
         'Każda część rdzenia ma testy, zanim trafi dalej.',
-        'Dokumentuję decyzje w repozytorium, żeby wrócić do nich po czasie.',
+        'Decyzje dokumentuję w repozytorium, żeby wrócić do nich po czasie.',
       ],
     },
-    cv: { title: 'CV', pl: 'Polska wersja', en: 'English version', download: 'Pobierz PDF' },
+    cv: { title: 'CV', pl: 'Wersja polska', en: 'Wersja angielska', download: 'Pobierz PDF' },
     contact: {
       title: 'Kontakt',
-      text: 'Najszybciej napiszesz przez GitHub albo pobierz CV i odezwij się na adres podany w CV.',
+      text: 'Najłatwiej przez GitHub. Dane kontaktowe są w CV.',
     },
     footer: 'Karol Idźkowski',
   },
   en: {
-    nav: { projects: 'Projects', stack: 'Stack', how: 'How I work', cv: 'CV', contact: 'Contact' },
+    nav: { projects: 'Projects', experience: 'Experience', stack: 'Stack', how: 'How I work', cv: 'CV', contact: 'Contact' },
     hero: {
       name: 'Karol Idźkowski',
-      role: 'I build AI tools that run locally.',
+      role: 'Junior developer building AI tools that run locally.',
       status: 'Open to new projects and collaboration.',
+      stack: 'Python · TypeScript · React · Rust',
       cvPl: 'Download CV (PL)',
       cvEn: 'Download CV (EN)',
       github: 'GitHub',
@@ -76,25 +77,24 @@ export const copy = {
     projects: {
       title: 'Projects',
       all: 'All',
-      open: 'Open',
-      readme: 'Description in the repository',
+      open: 'View code',
+      featuredLabel: 'Main project',
+    },
+    zinx: {
+      title: 'How it fits together',
+      caption: 'Every app has its own SQLite database. The dashboard and the assistant read the others’ data, but never write to it without confirmation.',
+      db: 'SQLite database',
+      reads: 'reads (read-only)',
+      confirm: 'writes after confirmation',
+      voice: 'voice assistant',
+      dash: 'dashboard',
+    },
+    experience: {
+      title: 'Experience and education',
       items: [
-        {
-          title: 'ZINX',
-          tags: ['AI', 'Backend', 'Frontend'],
-          summary:
-            'An ecosystem of five personal macOS apps: mail, planner, finance, dashboard and a voice assistant. Everything runs locally and the data stays on the machine.',
-          highlights: ['Voice assistant with a local LLM and speech recognition', 'Writes only after explicit user confirmation', '68 tests in the finance core, 28 in the assistant'],
-          link: 'https://github.com/Keryyyl/ZINX',
-        },
-        {
-          title: 'Infinity Wordle',
-          tags: ['Frontend'],
-          summary:
-            'Polish Wordle in plain JavaScript, no frameworks. Polish letters, an on-screen keyboard, light and dark mode, several games at once.',
-          highlights: ['Dictionary of over 50,000 Polish words'],
-          link: 'https://github.com/Keryyyl/Infinity_Wordle',
-        },
+        { role: 'Computer Science (Artificial Intelligence)', org: 'Vizja University', period: '10.2026 – present', text: 'Engineering studies with a specialisation in AI.' },
+        { role: 'Software tester (internship)', org: 'Concept Lab', period: '11.2024 – 12.2024', text: 'Bug identification and reporting, technical documentation, video recordings showing defects.' },
+        { role: 'Software developer technician', org: 'Kieślowski Technical School of Film and Computing', period: '09.2021 – 05.2026', text: 'Programming, databases and web application basics.' },
       ],
     },
     stack: {
@@ -118,7 +118,7 @@ export const copy = {
     cv: { title: 'CV', pl: 'Polish version', en: 'English version', download: 'Download PDF' },
     contact: {
       title: 'Contact',
-      text: 'The quickest way is GitHub, or download the CV and reach out at the address listed in it.',
+      text: 'GitHub is the quickest way. Contact details are in the CV.',
     },
     footer: 'Karol Idźkowski',
   },

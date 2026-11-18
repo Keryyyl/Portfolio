@@ -129,3 +129,48 @@ footer {
   .top nav { gap: 12px; font-size: 13px; }
   .hero { padding: 40px 0 36px; }
 }
+
+/* hero: stack */
+.hero-stack { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 14px; color: var(--muted); margin: -12px 0 28px; }
+
+/* projekt główny */
+.card.featured .eyebrow {
+  display: inline-block; font-size: 11px; text-transform: uppercase; letter-spacing: .14em;
+  color: var(--accent); margin-bottom: 4px;
+}
+.card.featured h3 { font-size: 26px; }
+.card.featured .card-head { align-items: flex-start; }
+
+/* schemat ZINX */
+.diagram {
+  margin: 8px 0 4px; padding: 20px; border: 1px dashed var(--line); border-radius: var(--radius);
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.diagram figcaption { margin-top: 12px; font-size: 13px; color: var(--muted); text-align: center; max-width: 40em; }
+.diagram .row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+.node {
+  border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 0;
+}
+.node strong { font-size: 14px; }
+.node span { font-size: 12px; color: var(--muted); }
+.node.voice { border-color: var(--accent); }
+.node.dash { border-color: var(--accent); width: min(220px, 100%); }
+.arrows { display: flex; gap: 10px; justify-content: space-around; width: 100%; font-size: 11px; color: var(--muted); }
+.arrows span { flex: 1; text-align: center; }
+.arrows span::before { content: '↓'; display: block; color: var(--accent); font-size: 14px; }
+.arrows.up span::before { content: '↑'; }
+.arrows.up span { flex: none; }
+
+/* doświadczenie */
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+.timeline li { border-left: 2px solid var(--line); padding-left: 16px; }
+.tl-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.period { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; color: var(--muted); }
+.org { color: var(--accent); font-size: 14px; }
+.timeline p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+@media (max-width: 640px) {
+  .diagram .row { grid-template-columns: 1fr; }
+  .card.featured h3 { font-size: 22px; }
+}
