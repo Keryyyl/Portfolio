@@ -6,14 +6,16 @@ import './App.css'
 
 const TAGS: Tag[] = ['AI', 'Backend', 'Frontend']
 
-/** Jeden przycisk: pokazuje język, na który przełączy stronę (np. „EN” przy polskim). */
+/** Przełącznik PL | EN: cały segmentowany element jest jednym przyciskiem,
+ *  kliknięcie w dowolnym miejscu przełącza język, aktywny segment jest podświetlony. */
 function LangSwitch() {
   const { lang, setLang } = useLang()
   const next: Lang = lang === 'pl' ? 'en' : 'pl'
   const label = next === 'en' ? 'Switch to English' : 'Przełącz na polski'
   return (
-    <button className="lang-toggle" onClick={() => setLang(next)} aria-label={label} title={label}>
-      {next.toUpperCase()}
+    <button className="lang" onClick={() => setLang(next)} aria-label={label} title={label}>
+      <span className={lang === 'pl' ? 'on' : ''}>PL</span>
+      <span className={lang === 'en' ? 'on' : ''}>EN</span>
     </button>
   )
 }
