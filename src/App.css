@@ -241,7 +241,6 @@ footer {
   content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(45, 212, 191, 0.05), transparent 40%);
 }
-@media (prefers-reduced-motion: reduce) { .hero::after { display: none; } }
 
 /* pulsująca kropka: wolniejszy oddech */
 .dot { animation-duration: 3.2s; }
@@ -465,9 +464,6 @@ button.ghost:hover { color: var(--text); border-color: rgba(94, 234, 212, 0.35);
 html { scroll-behavior: smooth; }
 /* sekcja nie chowa się pod przyklejonym paskiem nawigacji */
 section[id] { scroll-margin-top: 80px; }
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
 
 /* przełącznik języka: segmenty PL | EN, cały element przełącza */
 .lang {
@@ -490,6 +486,3 @@ section[id] { scroll-margin-top: 80px; }
   background-position: 0 calc(var(--scroll-y, 0) * -0.25px);
 }
 .page { position: relative; z-index: 1; }
-@media (prefers-reduced-motion: reduce) {
-  .bg-dots { background-position: 0 0; }
-}
