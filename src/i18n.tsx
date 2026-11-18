@@ -5,7 +5,7 @@ export type Lang = 'pl' | 'en'
 /** Wszystkie teksty interfejsu. Opisy projektów są w src/data/projects.ts. */
 export const copy = {
   pl: {
-    nav: { projects: 'Projekty', experience: 'Doświadczenie', stack: 'Stack', how: 'Sposób pracy', cv: 'CV', contact: 'Kontakt' },
+    nav: { projects: 'Projekty', experience: 'Doświadczenie', stack: 'Stack', how: 'Sposób pracy', contact: 'Kontakt' },
     runtime: {
       title: 'local-runtime.status',
       rows: [
@@ -80,13 +80,16 @@ export const copy = {
     },
     cv: { title: 'CV', pl: 'Wersja polska', en: 'Wersja angielska', download: 'Pobierz PDF' },
     contact: {
-      title: 'Kontakt',
-      text: 'Najłatwiej przez GitHub. Dane kontaktowe są w CV.',
+      title: 'Kontakt i CV',
+      heading: 'Szukasz kogoś do narzędzi AI działających lokalnie?',
+      text: 'Jestem otwarty na nowe projekty i współpracę. Najszybciej napiszesz przez GitHub.',
+      back: 'Wróć na górę ↑',
+      copyright: '© 2026 Karol Idźkowski · React & TypeScript',
     },
     footer: 'Karol Idźkowski',
   },
   en: {
-    nav: { projects: 'Projects', experience: 'Experience', stack: 'Stack', how: 'How I work', cv: 'CV', contact: 'Contact' },
+    nav: { projects: 'Projects', experience: 'Experience', stack: 'Stack', how: 'How I work', contact: 'Contact' },
     runtime: {
       title: 'local-runtime.status',
       rows: [
@@ -161,8 +164,11 @@ export const copy = {
     },
     cv: { title: 'CV', pl: 'Polish version', en: 'English version', download: 'Download PDF' },
     contact: {
-      title: 'Contact',
-      text: 'GitHub is the quickest way. Contact details are in the CV.',
+      title: 'Contact & CV',
+      heading: 'Looking for someone to build local-first AI tools?',
+      text: 'I am open to new projects and collaboration. GitHub is the quickest way to reach me.',
+      back: 'Back to top ↑',
+      copyright: '© 2026 Karol Idźkowski · React & TypeScript',
     },
     footer: 'Karol Idźkowski',
   },

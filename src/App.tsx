@@ -36,7 +36,7 @@ function Header() {
           <a href="#doswiadczenie">{t.nav.experience}</a>
           <a href="#stack">{t.nav.stack}</a>
           <a href="#sposob">{t.nav.how}</a>
-          <a href="#cv">{t.nav.cv}</a>
+          <a href="#kontakt">{t.nav.contact}</a>
         </nav>
         <LangSwitch />
       </div>
@@ -452,39 +452,40 @@ function How() {
   )
 }
 
-function Cv() {
-  const { t } = useLang()
-  return (
-    <section id="cv" className="section">
-      <h2>{t.cv.title}</h2>
-      <div className="actions">
-        <a className="btn primary" href="/cv/CV-Karol-Idzkowski-PL.pdf" download>
-          {t.cv.pl} · {t.cv.download}
-        </a>
-        <a className="btn" href="/cv/CV-Karol-Idzkowski-EN.pdf" download>
-          {t.cv.en} · {t.cv.download}
-        </a>
-      </div>
-    </section>
-  )
-}
-
 function Contact() {
   const { t } = useLang()
   return (
-    <section id="kontakt" className="section">
-      <h2>{t.contact.title}</h2>
-      <p>{t.contact.text}</p>
-      <a className="btn" href="https://github.com/Keryyyl" target="_blank" rel="noreferrer">
-        GitHub
-      </a>
+    <section id="kontakt" className="section contact-section">
+      <div className="contact-card">
+        <span className="eyebrow">{t.contact.title}</span>
+        <h2 className="contact-heading">{t.contact.heading}</h2>
+        <p>{t.contact.text}</p>
+        <div className="actions">
+          <a className="btn primary" href="/cv/CV-Karol-Idzkowski-PL.pdf" download>
+            {t.cv.pl} · {t.cv.download}
+          </a>
+          <a className="btn" href="/cv/CV-Karol-Idzkowski-EN.pdf" download>
+            {t.cv.en} · {t.cv.download}
+          </a>
+          <a className="btn" href="https://github.com/Keryyyl" target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+        </div>
+      </div>
     </section>
   )
 }
 
 function Footer() {
   const { t } = useLang()
-  return <footer>{t.footer}</footer>
+  return (
+    <footer className="site-footer">
+      <span>{t.contact.copyright}</span>
+      <button className="ghost" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        {t.contact.back}
+      </button>
+    </footer>
+  )
 }
 
 export default function App() {
@@ -497,7 +498,6 @@ export default function App() {
         <Experience />
         <Stack />
         <How />
-        <Cv />
         <Contact />
       </main>
       <Footer />

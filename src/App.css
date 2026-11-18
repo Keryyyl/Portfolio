@@ -435,3 +435,24 @@ button.ghost:hover { color: var(--text); border-color: rgba(94, 234, 212, 0.35);
 .section { padding: 32px 0; }
 .subhead { margin: 24px 0 12px; }
 .subhead:first-of-type { margin-top: 20px; }
+
+/* ===== kontakt i CV: zamykająca karta bento ===== */
+.contact-section { padding-bottom: 24px; }
+.contact-card {
+  background: #0c0c0e; border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 12px;
+  padding: 28px; box-shadow: 0 0 60px -28px rgba(45, 212, 191, 0.3);
+}
+.contact-card .eyebrow {
+  display: inline-block; font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--accent);
+}
+.contact-heading { font-size: clamp(22px, 3vw, 28px); letter-spacing: -.01em; margin: 8px 0 10px; text-transform: none; color: var(--text); font-weight: 600; }
+.contact-card p { margin: 0 0 20px; color: var(--muted); max-width: 40em; }
+
+/* stopka */
+.site-footer {
+  width: min(960px, 100% - 32px); margin: 0 auto; padding: 20px 0 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  color: var(--muted); font-size: 13px;
+}
+.site-footer button.ghost { font-size: 13px; }
