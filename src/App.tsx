@@ -552,9 +552,33 @@ function Footer() {
   )
 }
 
+/** Tło w kropki (jak w listach CTHX). Kropki przesuwają się wolniej niż treść: efekt paralaksy przy przewijaniu. */
+function BackgroundDots() {
+  useEffect(() => {
+    const root = document.documentElement
+    let frame = 0
+    const update = () => {
+      frame = 0
+      root.style.setProperty('--scroll-y', String(window.scrollY))
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+  return <div className="bg-dots" aria-hidden />
+}
+
 export default function App() {
   return (
     <LangProvider>
+      <BackgroundDots />
+      <div className="page">
       <Header />
       <main>
         <Hero />
@@ -564,6 +588,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      </div>
     </LangProvider>
   )
 }
