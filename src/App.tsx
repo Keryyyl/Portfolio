@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type MouseEvent as ReactMouseEvent } from 'react'
+import { useForm, ValidationError } from '@formspree/react'
 import { LangProvider, useLang, type Lang } from './i18n'
 import { projects, type Project, type Tag } from './data/projects'
 import './App.css'
@@ -433,93 +434,76 @@ function Stack() {
   )
 }
 
-const CONTACT_ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT as string | undefined
+/** Identyfikator formularza Formspree. Jest publiczny (trafia do kodu każdej strony z formularzem);
+ *  adres odbiorcy ustawia się w panelu Formspree, nie w kodzie. */
+const FORMSPREE_ID = 'myewwqyl'
 
-type FormStatus = 'idle' | 'sending' | 'sent' | 'error' | 'unconfigured'
-
-/** Formularz kontaktowy. Wysyła JSON na adres z VITE_CONTACT_ENDPOINT (np. Formspree).
- *  Adres e-mail odbiorcy jest po stronie usługi, nie w kodzie strony. */
+/** Formularz kontaktowy na @formspree/react (wzorzec z dokumentacji Formspree). */
 function ContactForm() {
   const { t } = useLang()
-  const [status, setStatus] = useState<FormStatus>('idle')
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [state, handleSubmit] = useForm(FORMSPREE_ID)
+  const [clientErrors, setClientErrors] = useState<Record<string, string>>({})
 
-  const submit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const form = e.currentTarget
-    const data = new FormData(form)
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const data = new FormData(e.currentTarget)
     const name = String(data.get('name') ?? '').trim()
     const email = String(data.get('email') ?? '').trim()
     const message = String(data.get('message') ?? '').trim()
-    const consent = data.get('consent') === 'on'
-    const honeypot = String(data.get('website') ?? '')
-
     const found: Record<string, string> = {}
     if (!name) found.name = t.form.errors.name
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) found.email = t.form.errors.email
     if (message.length < 10) found.message = t.form.errors.message
-    if (!consent) found.consent = t.form.errors.consent
-    setErrors(found)
-    if (Object.keys(found).length) return
+    if (data.get('consent') !== 'on') found.consent = t.form.errors.consent
+    setClientErrors(found)
+    if (Object.keys(found).length) {
+      e.preventDefault()
+      return
+    }
+    void handleSubmit(e)
+  }
 
-    // pułapka na boty: wypełnione ukryte pole udaje sukces i nic nie wysyła
-    if (honeypot) {
-      setStatus('sent')
-      return
-    }
-    if (!CONTACT_ENDPOINT) {
-      setStatus('unconfigured')
-      return
-    }
-    setStatus('sending')
-    try {
-      const res = await fetch(CONTACT_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ name, email, message, _subject: 'Wiadomość z portfolio' }),
-      })
-      if (!res.ok) throw new Error(String(res.status))
-      form.reset()
-      setStatus('sent')
-    } catch {
-      setStatus('error')
-    }
+  if (state.succeeded) {
+    return (
+      <div className="contact-form done" role="status">
+        <p>{t.form.sent}</p>
+      </div>
+    )
   }
 
   return (
-    <form className="contact-form" onSubmit={(e) => void submit(e)} noValidate>
+    <form className="contact-form" onSubmit={onSubmit} noValidate>
       <div className="row-2">
         <label>
           <span>{t.form.name}</span>
           <input name="name" autoComplete="name" maxLength={120} />
-          {errors.name && <em className="field-error">{errors.name}</em>}
+          {clientErrors.name && <em className="field-error">{clientErrors.name}</em>}
         </label>
         <label>
           <span>{t.form.email}</span>
           <input name="email" type="email" autoComplete="email" maxLength={200} />
-          {errors.email && <em className="field-error">{errors.email}</em>}
+          {clientErrors.email && <em className="field-error">{clientErrors.email}</em>}
+          <ValidationError field="email" errors={state.errors} className="field-error" />
         </label>
       </div>
       <label>
         <span>{t.form.message}</span>
         <textarea name="message" rows={5} maxLength={3000} />
-        {errors.message && <em className="field-error">{errors.message}</em>}
+        {clientErrors.message && <em className="field-error">{clientErrors.message}</em>}
+        <ValidationError field="message" errors={state.errors} className="field-error" />
       </label>
       <label className="check">
         <input name="consent" type="checkbox" />
         <span>{t.form.consent}</span>
-        {errors.consent && <em className="field-error">{errors.consent}</em>}
+        {clientErrors.consent && <em className="field-error">{clientErrors.consent}</em>}
       </label>
-      {/* pole-pułapka dla botów: ukryte dla ludzi */}
-      <input className="hp" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+      {/* pole-pułapka dla botów (Formspree odrzuca wiadomości, w których je wypełniono) */}
+      <input className="hp" name="_gotcha" tabIndex={-1} autoComplete="off" aria-hidden="true" />
       <div className="form-foot">
-        <button className="btn primary" type="submit" disabled={status === 'sending'}>
-          {status === 'sending' ? t.form.sending : t.form.send}
+        <button className="btn primary" type="submit" disabled={state.submitting}>
+          {state.submitting ? t.form.sending : t.form.send}
         </button>
         <span className="form-status" role="status" aria-live="polite">
-          {status === 'sent' && t.form.sent}
-          {status === 'error' && t.form.error}
-          {status === 'unconfigured' && t.form.notConfigured}
+          {state.errors !== null && !state.submitting && t.form.error}
         </span>
       </div>
     </form>
