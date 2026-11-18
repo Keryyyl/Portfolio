@@ -255,10 +255,12 @@ function Projects() {
           </button>
         ))}
       </div>
-      <div className="grid">
-        {shown.map((p) => (
-          <Card key={p.id} p={p} />
-        ))}
+      <div className="grid-scroll">
+        <div className="grid">
+          {shown.map((p) => (
+            <Card key={p.id} p={p} />
+          ))}
+        </div>
       </div>
 
       {lab.length > 0 && (

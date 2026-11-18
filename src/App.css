@@ -297,3 +297,15 @@ footer {
 .runtime dd { margin: 0; color: #a1a1aa; text-align: right; }
 .runtime dd.accent { color: var(--accent); }
 @media (max-width: 1023px) { .runtime { justify-self: start; } }
+
+/* ===== moduły ZINX: jeden rząd widoczny, reszta do przewinięcia ===== */
+.grid-scroll { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.14) transparent; }
+@media (min-width: 900px) {
+  /* wysokość pola = jeden rząd kart (420 px), 3 kolumny, kolejne rzędy przewijane pionowo */
+  .grid-scroll { height: 420px; overflow-y: auto; padding-right: 6px; }
+  .grid-scroll .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 420px;
+  }
+  .grid-scroll .card { height: 100%; }
+}
