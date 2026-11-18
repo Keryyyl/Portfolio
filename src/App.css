@@ -1,24 +1,14 @@
 :root {
-  --bg: #0b0b0f;
-  --surface: #14141b;
-  --line: #242432;
-  --text: #ececf2;
-  --muted: #8d8d9c;
-  --accent: #7ee2c3;
-  --radius: 10px;
+  --bg: #09090b;
+  --surface: #0c0c0e;
+  --line: rgba(255, 255, 255, 0.04);
+  --line-strong: rgba(255, 255, 255, 0.08);
+  --text: #ededf0;
+  --muted: #7f7f89;
+  --accent: #06b6d4;
+  --accent-soft: rgba(6, 182, 212, 0.12);
+  --radius: 12px;
   color-scheme: dark;
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme='dark']) {
-    --bg: #fafaf7;
-    --surface: #ffffff;
-    --line: #e4e4dc;
-    --text: #15151b;
-    --muted: #666672;
-    --accent: #1a9c78;
-    color-scheme: light;
-  }
 }
 
 * { box-sizing: border-box; }
@@ -90,12 +80,15 @@ h2 {
 }
 .filters button.on { color: var(--text); border-color: var(--accent); }
 
-.grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+@media (min-width: 900px) {
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .card.featured { grid-column: span 2; }
+}
 .card {
   background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-  padding: 22px; display: flex; flex-direction: column; gap: 12px;
+  padding: 22px; transition: border-color .2s ease, box-shadow .2s ease; display: flex; flex-direction: column; gap: 12px;
 }
-.card.featured { grid-column: 1 / -1; }
 .card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .card h3 { margin: 0; font-size: 20px; letter-spacing: -.01em; }
 .card p { margin: 0; color: var(--muted); }
@@ -174,3 +167,16 @@ footer {
   .diagram .row { grid-template-columns: 1fr; }
   .card.featured h3 { font-size: 22px; }
 }
+
+/* bento: akcent i delikatna poświata */
+.card:hover { border-color: rgba(6, 182, 212, 0.28); }
+.card.featured {
+  box-shadow: 0 0 60px -20px rgba(6, 182, 212, 0.25);
+  border-color: rgba(6, 182, 212, 0.18);
+}
+.card.featured:hover { box-shadow: 0 0 80px -16px rgba(6, 182, 212, 0.35); }
+.card > a { color: var(--accent); }
+.dot { box-shadow: 0 0 12px rgba(6, 182, 212, .6); }
+.btn.primary { color: #021014; }
+.lang button.on { color: #021014; }
+.filters button.on { border-color: var(--accent); background: var(--accent-soft); }
