@@ -54,7 +54,6 @@ export const copy = {
     },
     experience: {
       title: 'Doświadczenie i edukacja',
-      currentLabel: 'Obecnie',
       items: [
         { role: 'Informatyka (Sztuczna Inteligencja)', org: 'Uniwersytet Vizja', period: '10.2026 – obecnie', kind: 'Edukacja', current: true, text: 'Studia inżynierskie ze specjalizacją w AI.' },
         { role: 'Tester oprogramowania (staż)', org: 'Concept Lab', period: '11.2024 – 12.2024', kind: 'Staż', current: false, text: 'Identyfikacja i raportowanie błędów, dokumentacja techniczna, nagrania prezentujące usterki.' },
@@ -136,7 +135,6 @@ export const copy = {
     },
     experience: {
       title: 'Experience and education',
-      currentLabel: 'Current',
       items: [
         { role: 'Computer Science (Artificial Intelligence)', org: 'Vizja University', period: '10.2026 – present', kind: 'Education', current: true, text: 'Engineering studies with a specialisation in AI.' },
         { role: 'Software Tester (Internship)', org: 'Concept Lab', period: '11.2024 – 12.2024', kind: 'Internship', current: false, text: 'Bug identification and reporting, technical documentation, video recordings showing defects.' },

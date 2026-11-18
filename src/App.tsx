@@ -376,6 +376,18 @@ function Projects() {
   )
 }
 
+/** Okres z wyróżnionym słowem „obecnie” / „present” */
+function Period({ text }: { text: string }) {
+  const m = text.match(/^(.*?)(obecnie|present)$/)
+  if (!m) return <span className="period">{text}</span>
+  return (
+    <span className="period">
+      {m[1]}
+      <span className="now-word">{m[2]}</span>
+    </span>
+  )
+}
+
 function Experience() {
   const { t } = useLang()
   return (
@@ -384,16 +396,15 @@ function Experience() {
       <ol className="timeline">
         {t.experience.items.map((e) => (
           <li key={e.role} className={e.current ? 'current' : ''}>
-            <span className="node" aria-hidden />
-            <div className="tl-head">
-              <strong>{e.role}</strong>
-              <span className={`kind ${e.kind === 'Staż' || e.kind === 'Internship' ? 'intern' : ''}`}>{e.kind}</span>
+            <span className="tl-dot" aria-hidden />
+            <div className="tl-row">
+              <div className="tl-title">
+                <strong>{e.role}</strong>
+                <span className={`kind ${e.kind === 'Staż' || e.kind === 'Internship' ? 'intern' : ''}`}>{e.kind}</span>
+              </div>
+              <Period text={e.period} />
             </div>
-            <div className="tl-meta">
-              <span className="org">{e.org}</span>
-              <span className="period">{e.period}</span>
-              {e.current && <span className="now">{t.experience.currentLabel}</span>}
-            </div>
+            <div className="org">{e.org}</div>
             <p>{e.text}</p>
           </li>
         ))}

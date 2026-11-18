@@ -157,7 +157,6 @@ footer {
 
 /* doświadczenie */
 .timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
-.timeline li { border-left: 2px solid var(--line); padding-left: 16px; }
 .tl-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .period { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; color: var(--muted); }
 .org { color: var(--accent); font-size: 14px; }
@@ -301,11 +300,11 @@ footer {
 /* ===== moduły ZINX: jeden rząd widoczny, reszta do przewinięcia ===== */
 .grid-scroll { scrollbar-width: thin; scrollbar-color: rgba(255, 255, 255, 0.14) transparent; }
 @media (min-width: 900px) {
-  /* wysokość pola = jeden rząd kart (420 px), 3 kolumny, kolejne rzędy przewijane pionowo */
-  .grid-scroll { height: 420px; overflow-y: auto; padding-right: 6px; }
+  /* wysokość pola = jeden rząd kart (448 px), 3 kolumny, kolejne rzędy przewijane pionowo */
+  .grid-scroll { height: 448px; overflow-y: auto; padding-right: 6px; }
   .grid-scroll .grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: 420px;
+    grid-auto-rows: 448px;
   }
   .grid-scroll .card { height: 100%; }
 }
@@ -381,34 +380,33 @@ button.ghost:hover { color: var(--text); border-color: rgba(94, 234, 212, 0.35);
 }
 
 /* ===== doświadczenie: ciągła oś czasu ===== */
-.timeline { position: relative; list-style: none; margin: 0; padding: 0 0 0 26px; display: grid; gap: 22px; }
-.timeline::before {
-  content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px;
-  background: rgba(255, 255, 255, 0.08);
-}
-.timeline li { position: relative; border-left: 0; padding-left: 0; }
-.timeline .node {
-  position: absolute; left: -26px; top: 6px; width: 11px; height: 11px; border-radius: 50%;
+.timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: 24px; }
+.timeline li { position: relative; border-left: 0; padding-left: 24px; }
+/* kropka 8×8 na środku linii */
+.timeline .tl-dot {
+  position: absolute; left: 0; top: 8px; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
   background: #27272a; border: 1px solid rgba(255, 255, 255, 0.16); box-sizing: border-box;
 }
-.timeline li.current .node {
+.timeline li.current .tl-dot {
   background: var(--accent); border-color: var(--accent);
   box-shadow: 0 0 10px rgba(94, 234, 212, 0.4);
 }
-.tl-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.tl-head strong { font-size: 16px; }
+/* linia łącząca kropki: od pierwszej do ostatniej */
+.timeline li:not(:last-child)::after {
+  content: ''; position: absolute; left: 3.5px; top: 16px; bottom: -32px; width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.tl-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.tl-title { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tl-title strong { font-size: 16px; }
 .kind {
   font-size: 11px; padding: 2px 8px; border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.08); color: var(--muted);
 }
 .kind.intern { color: #a1a1aa; }
-.tl-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 2px; }
-.tl-meta .org { color: var(--accent); font-size: 14px; }
-.tl-meta .period { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; color: var(--muted); }
-.now {
-  font-size: 11px; padding: 2px 8px; border-radius: 999px;
-  color: var(--accent); background: rgba(45, 212, 191, 0.1); border: 1px solid rgba(94, 234, 212, 0.25);
-}
+.timeline .period { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; color: var(--muted); white-space: nowrap; }
+.timeline .now-word { color: var(--accent); }
+.timeline .org { color: var(--accent); font-size: 14px; margin-top: 2px; }
 .timeline p { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
 
 /* ===== stack: karty bento z pastylkami ===== */
