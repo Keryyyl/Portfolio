@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState, type MouseEvent as ReactMouseEvent } from 'react'
 import { LangProvider, useLang, type Lang } from './i18n'
 import { projects, type Project, type Tag } from './data/projects'
 import './App.css'
@@ -21,46 +21,95 @@ function LangSwitch() {
 
 function Header() {
   const { t } = useLang()
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
   return (
-    <header className="top">
-      <nav aria-label="Główna">
-        <a href="#projekty">{t.nav.projects}</a>
-        <a href="#doswiadczenie">{t.nav.experience}</a>
-        <a href="#stack">{t.nav.stack}</a>
-        <a href="#sposob">{t.nav.how}</a>
-        <a href="#cv">{t.nav.cv}</a>
-      </nav>
-      <LangSwitch />
+    <header className={`top-bar ${scrolled ? 'scrolled' : ''}`}>
+      <div className="top">
+        <nav aria-label="Główna">
+          <a href="#projekty">{t.nav.projects}</a>
+          <a href="#doswiadczenie">{t.nav.experience}</a>
+          <a href="#stack">{t.nav.stack}</a>
+          <a href="#sposob">{t.nav.how}</a>
+          <a href="#cv">{t.nav.cv}</a>
+        </nav>
+        <LangSwitch />
+      </div>
     </header>
+  )
+}
+
+function RuntimeCard() {
+  const { t } = useLang()
+  return (
+    <aside className="runtime" aria-label={t.runtime.title}>
+      <div className="runtime-head">
+        <span className="runtime-dot" aria-hidden />
+        <span>{t.runtime.title}</span>
+      </div>
+      <dl>
+        {t.runtime.rows.map((r) => (
+          <div key={r.key}>
+            <dt>{r.key}</dt>
+            <dd className={r.accent ? 'accent' : ''}>{r.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </aside>
   )
 }
 
 function Hero() {
   const { t } = useLang()
+  const ref = useRef<HTMLElement>(null)
+  // reflektor: pozycja kursora zapisywana w zmiennych CSS sekcji
+  const onMove = (e: ReactMouseEvent<HTMLElement>) => {
+    const el = ref.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    el.style.setProperty('--mouse-x', `${e.clientX - r.left}px`)
+    el.style.setProperty('--mouse-y', `${e.clientY - r.top}px`)
+  }
   return (
-    <section className="hero">
-      <p className="status">
-        <span className="dot" aria-hidden /> {t.hero.status}
-      </p>
-      <h1>{t.hero.name}</h1>
-      <p className="role">{t.hero.role}</p>
-      <p className="hero-stack">{t.hero.stack}</p>
-      <div className="actions">
-        <a className="btn primary" href="#projekty">
-          {t.projects.title}
-        </a>
-        <a className="btn" href="/cv/CV-Karol-Idzkowski-PL.pdf" download>
-          {t.hero.cvPl}
-        </a>
-        <a className="btn" href="https://github.com/Keryyyl" target="_blank" rel="noreferrer">
-          {t.hero.github}
-        </a>
+    <section className="hero" ref={ref} onMouseMove={onMove}>
+      <div className="hero-grid">
+        <div className="hero-main">
+          <p className="status">
+            <span className="dot" aria-hidden /> {t.hero.status}
+          </p>
+          <h1>{t.hero.name}</h1>
+          <p className="role">{t.hero.role}</p>
+          <p className="hero-stack">
+            {t.hero.stack.split(' · ').map((x, i) => (
+              <span key={x}>
+                {i > 0 && <span className="sep"> · </span>}
+                {x}
+              </span>
+            ))}
+          </p>
+          <div className="actions">
+            <a className="btn primary" href="#projekty">
+              {t.projects.title}
+            </a>
+            <a className="btn" href="/cv/CV-Karol-Idzkowski-PL.pdf" download>
+              {t.hero.cvPl}
+            </a>
+            <a className="btn" href="https://github.com/Keryyyl" target="_blank" rel="noreferrer">
+              {t.hero.github}
+            </a>
+          </div>
+        </div>
+        <RuntimeCard />
       </div>
     </section>
   )
 }
 
-/** Schemat ZINX: każda aplikacja ma własną bazę, dashboard i asystent czytają dane innych. */
 function ZinxDiagram() {
   const { t } = useLang()
   const sources = ['ZIM', 'PFMX', 'CTHX']

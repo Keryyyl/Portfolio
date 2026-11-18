@@ -6,6 +6,15 @@ export type Lang = 'pl' | 'en'
 export const copy = {
   pl: {
     nav: { projects: 'Projekty', experience: 'Doświadczenie', stack: 'Stack', how: 'Sposób pracy', cv: 'CV', contact: 'Kontakt' },
+    runtime: {
+      title: 'local-runtime.status',
+      rows: [
+        { key: 'architecture', value: 'local-first', accent: false },
+        { key: 'ai_inference', value: 'Ollama + whisper.cpp', accent: false },
+        { key: 'core_tests', value: '216 passing', accent: true },
+        { key: 'external_calls', value: 'poczta, pogoda', accent: false },
+      ],
+    },
     hero: {
       name: 'Karol Idźkowski',
       role: 'Młodszy programista. Buduję narzędzia AI, które działają lokalnie.',
@@ -73,6 +82,15 @@ export const copy = {
   },
   en: {
     nav: { projects: 'Projects', experience: 'Experience', stack: 'Stack', how: 'How I work', cv: 'CV', contact: 'Contact' },
+    runtime: {
+      title: 'local-runtime.status',
+      rows: [
+        { key: 'architecture', value: 'local-first', accent: false },
+        { key: 'ai_inference', value: 'Ollama + whisper.cpp', accent: false },
+        { key: 'core_tests', value: '216 passing', accent: true },
+        { key: 'external_calls', value: 'mail, weather', accent: false },
+      ],
+    },
     hero: {
       name: 'Karol Idźkowski',
       role: 'Junior developer building AI tools that run locally.',
