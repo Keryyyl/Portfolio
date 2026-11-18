@@ -6,17 +6,15 @@ import './App.css'
 
 const TAGS: Tag[] = ['AI', 'Backend', 'Frontend']
 
+/** Jeden przycisk: pokazuje język, na który przełączy stronę (np. „EN” przy polskim). */
 function LangSwitch() {
   const { lang, setLang } = useLang()
-  const options: Lang[] = ['pl', 'en']
+  const next: Lang = lang === 'pl' ? 'en' : 'pl'
+  const label = next === 'en' ? 'Switch to English' : 'Przełącz na polski'
   return (
-    <div className="lang" role="group" aria-label="Język / Language">
-      {options.map((l) => (
-        <button key={l} className={l === lang ? 'on' : ''} aria-pressed={l === lang} onClick={() => setLang(l)}>
-          {l.toUpperCase()}
-        </button>
-      ))}
-    </div>
+    <button className="lang-toggle" onClick={() => setLang(next)} aria-label={label} title={label}>
+      {next.toUpperCase()}
+    </button>
   )
 }
 

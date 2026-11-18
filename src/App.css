@@ -475,3 +475,11 @@ section[id] { scroll-margin-top: 80px; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* przełącznik języka: jeden przycisk */
+.lang-toggle {
+  min-width: 44px; height: 30px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: transparent; color: var(--text);
+  font-size: 13px; letter-spacing: .08em; font-weight: 600;
+}
+.lang-toggle:hover { border-color: rgba(94, 234, 212, 0.45); color: var(--accent); }
